@@ -8,6 +8,16 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.10"
 graphene = "3.2.2"
+fastapi = "0.115.8"
+starlette-graphene3 = "0.6.0"
+uvicorn = "0.21.1"
+sqlalchemy = "2.0.11"
+psycopg = "3.1.8"
+pydantic = "2.10.6"
+pydantic-settings = "2.8.1"
+alembic = "1.15.1"
+asyncpg = "0.30.0"
+psycopg2-binary = "2.9.10"
 
 
 [tool.poetry.group.dev.dependencies]
