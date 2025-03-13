@@ -2,7 +2,7 @@ from logging.config import fileConfig
 
 from sqlalchemy import create_engine
 
-from app.database_config import Base
+from app.database import Base
 from app.models import *  # noqa
 from app.settings import PostgresSettings
 
