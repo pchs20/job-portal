@@ -2,9 +2,9 @@ from logging.config import fileConfig
 
 from sqlalchemy import create_engine
 
-from graphene_start.database_config import Base
-from graphene_start.models import *  # noqa
-from graphene_start.settings import PostgresSettings
+from app.database_config import Base
+from app.models import *  # noqa
+from app.settings import PostgresSettings
 
 from alembic import context
 

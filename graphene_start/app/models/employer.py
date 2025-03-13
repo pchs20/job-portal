@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
 
-from graphene_start.database_config import Base
+from app.database_config import Base
 
 
 class Employer(Base):
