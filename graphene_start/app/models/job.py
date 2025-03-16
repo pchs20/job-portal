@@ -13,4 +13,4 @@ class Job(Base):
     employer_id = Column(Integer, ForeignKey('employers.id'))
 
     # Relationships
-    employer = relationship('Employer', back_populates='jobs')
+    employer = relationship('Employer', back_populates='jobs', lazy='selectin')

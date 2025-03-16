@@ -1,7 +1,5 @@
 from graphene import Field, Int, List, ObjectType, String
 
-from app.database.init_db import employers_data, jobs_data
-
 
 class EmployerObject(ObjectType):
     id = Int()
@@ -12,7 +10,7 @@ class EmployerObject(ObjectType):
 
     @staticmethod
     def resolve_jobs(root, info):
-        return [job for job in jobs_data if job['employer_id'] == root['id']]
+        return root.jobs
 
 
 class JobObject(ObjectType):
@@ -24,11 +22,4 @@ class JobObject(ObjectType):
 
     @staticmethod
     def resolve_employer(root, info):
-        return next(
-            (
-                employer
-                for employer in employers_data
-                if employer['id'] == root['employer_id']
-            ),
-            None,
-        )
+        return root.employer
