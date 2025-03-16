@@ -1,3 +1,5 @@
+import asyncio
+
 from app.database import async_session
 from app.models import Employer, Job
 
@@ -49,8 +51,14 @@ async def main() -> None:
         for employer in employers_data:
             employer = Employer(**employer)
             session.add(employer)
+        print('Initial employers data done')
         for job in jobs_data:
             job = Job(**job)
             session.add(job)
+        print('Initial jobs data done')
         await session.commit()
         await session.close()
+
+
+if __name__ == '__main__':
+    asyncio.run(main())
