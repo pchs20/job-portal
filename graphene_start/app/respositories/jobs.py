@@ -1,6 +1,6 @@
 from typing import Any
 
-from sqlalchemy import select
+from sqlalchemy import delete, select
 from sqlalchemy.orm import selectinload
 
 from app.models import Job
@@ -39,3 +39,8 @@ class JobRepository(BaseRepository):
         await self.commit()
         await self._db.refresh(job)
         return job
+
+    async def delete(self, job_id: int) -> None:
+        query = delete(Job).where(Job.id == job_id)
+        await self._db.execute(query)
+        await self.commit()

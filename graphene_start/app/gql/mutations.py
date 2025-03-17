@@ -1,6 +1,6 @@
 from typing import Any
 
-from graphene import Field, Int, Mutation, ObjectType, String
+from graphene import Boolean, Field, Int, Mutation, ObjectType, String
 
 from app.deps import get_repository
 from app.gql import JobObject
@@ -56,6 +56,23 @@ class UpdateJob(Mutation):
         return UpdateJob(job=job)
 
 
+class DeleteJob(Mutation):
+    class Arguments:
+        id = Int(required=True)
+
+    success = Boolean()
+
+    @staticmethod
+    async def mutate(root, info, id):
+        jobs_repo = await get_repository(JobRepository)
+        job = await jobs_repo.get(id)
+        if job is None:
+            raise Exception(f'Job with id {id} not found')
+        await jobs_repo.delete(id)
+        return DeleteJob(success=True)
+
+
 class Mutation(ObjectType):  # type: ignore
     add_job = AddJob.Field()
     update_job = UpdateJob.Field()
+    delete_job = DeleteJob.Field()
