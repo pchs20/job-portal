@@ -3,9 +3,9 @@ from typing import Any
 from graphene import Boolean, Field, Int, Mutation, ObjectType, String
 
 from app.deps import get_repository
-from app.gql import JobObject
-from app.models import Job
-from app.respositories import JobRepository
+from app.gql import EmployerObject, JobObject
+from app.models import Employer, Job
+from app.respositories import EmployerRepository, JobRepository
 
 
 class AddJob(Mutation):
@@ -72,7 +72,24 @@ class DeleteJob(Mutation):
         return DeleteJob(success=True)
 
 
+class AddEmployer(Mutation):
+    class Arguments:
+        name = String(required=True)
+        contact_email = String(required=True)
+        industry = String(required=True)
+
+    employer = Field(lambda: EmployerObject)
+
+    @staticmethod
+    async def mutate(root, info, name, contact_email, industry):
+        employers_repo = await get_repository(EmployerRepository)
+        employer = Employer(name=name, contact_email=contact_email, industry=industry)
+        employer = await employers_repo.create(employer)
+        return AddEmployer(employer=employer)
+
+
 class Mutation(ObjectType):  # type: ignore
     add_job = AddJob.Field()
     update_job = UpdateJob.Field()
     delete_job = DeleteJob.Field()
+    add_employer = AddEmployer.Field()
