@@ -23,3 +23,14 @@ class JobObject(ObjectType):
     @staticmethod
     def resolve_employer(root, info):
         return root.employer
+
+
+class UserObject(ObjectType):
+    id = Int()
+    username = String()
+    email = String()
+    role = String()
+
+    @staticmethod
+    def resolve_user(root, info):
+        return root.user
