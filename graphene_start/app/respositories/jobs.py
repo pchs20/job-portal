@@ -11,6 +11,7 @@ class JobRepository(BaseRepository):
     async def get(self, job_id: int) -> Job | None:
         query = select(Job).where(Job.id == job_id)
         query = query.options(selectinload(Job.employer))
+        query = query.options(selectinload(Job.job_applications))
         result = await self._db.execute(query)
         return result.scalars().one_or_none()
 

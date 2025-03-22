@@ -14,3 +14,8 @@ class Job(Base):
 
     # Relationships
     employer = relationship('Employer', back_populates='jobs', lazy='selectin')
+    job_applications = relationship(
+        'JobApplication',
+        back_populates='job',
+        lazy='selectin',
+    )

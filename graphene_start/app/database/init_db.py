@@ -1,7 +1,7 @@
 import asyncio
 
 from app.database import async_session
-from app.models import Employer, Job, User
+from app.models import Employer, Job, JobApplication, User
 
 employers_data = [
     {
@@ -60,6 +60,25 @@ users_data = [
     },
 ]
 
+job_applications_data = [
+    {
+        'user_id': 1,
+        'job_id': 1,
+    },
+    {
+        'user_id': 1,
+        'job_id': 2,
+    },
+    {
+        'user_id': 2,
+        'job_id': 2,
+    },
+    {
+        'user_id': 2,
+        'job_id': 3,
+    },
+]
+
 
 async def main() -> None:
     async with async_session() as session:
@@ -75,6 +94,10 @@ async def main() -> None:
             user = User(**user)
             session.add(user)
         print('Initial user data done')
+        for job_application in job_applications_data:
+            job_application = JobApplication(**job_application)
+            session.add(job_application)
+        print('Initial job applications data done')
         await session.commit()
         await session.close()
 

@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String
+from sqlalchemy.orm import relationship
 
 from app.database import Base
 
@@ -11,3 +12,10 @@ class User(Base):
     email = Column(String)
     password = Column(String)
     role = Column(String)
+
+    # Relationships
+    job_applications = relationship(
+        'JobApplication',
+        back_populates='user',
+        lazy='selectin',
+    )
