@@ -1,4 +1,16 @@
+import secrets
+
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+
+class SecuritySettings(BaseSettings):
+    """General settings for the application."""
+
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
+    SECRET_KEY: str = secrets.token_urlsafe(32)
+    TOKEN_ENCRYPTION_ALGORITHM: str = 'HS256'
+
+    model_config = SettingsConfigDict(env_file='.env')
 
 
 class PostgresSettings(BaseSettings):

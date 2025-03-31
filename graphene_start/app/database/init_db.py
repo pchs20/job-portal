@@ -2,6 +2,7 @@ import asyncio
 
 from app.database import async_session
 from app.models import Employer, Job, JobApplication, User
+from app.security import get_password_hash
 
 employers_data = [
     {
@@ -91,6 +92,9 @@ async def main() -> None:
             session.add(job)
         print('Initial jobs data done')
         for user in users_data:
+            user['hashed_password'] = get_password_hash(
+                password=user.pop('password'),
+            )
             user = User(**user)
             session.add(user)
         print('Initial user data done')

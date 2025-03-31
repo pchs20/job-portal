@@ -18,6 +18,8 @@ pydantic-settings = "2.8.1"
 alembic = "1.15.1"
 asyncpg = "0.30.0"
 psycopg2-binary = "2.9.10"
+pyjwt = "2.10.1"
+passlib = {extras = ["bcrypt"], version = "1.7.4"}
 
 
 [tool.poetry.group.dev.dependencies]
