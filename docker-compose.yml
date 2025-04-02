@@ -5,14 +5,14 @@ services:
   backend:
     build:
       context: .
-      dockerfile: graphene_start/Dockerfile
+      dockerfile: job_portal/Dockerfile
     volumes:
-      - ./graphene_start:/graphene_start
-      - /graphene_start/.venv
+      - ./job_portal:/job_portal
+      - /job_portal/.venv
     ports:
       - 80:8000
     networks:
-      - graphene-start
+      - job-portal-network
     env_file:
       - .env
     depends_on:
@@ -24,11 +24,11 @@ services:
     expose:
       - 5432
     networks:
-      - graphene-start
+      - job-portal-network
     env_file:
       - .env
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U pduran -d db_graphene"]
+      test: ["CMD-SHELL", "pg_isready -U pduran -d db_postgres"]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -37,7 +37,7 @@ services:
     image: dpage/pgadmin4:latest
     container_name: pgadmin-dev
     networks:
-      - graphene-start
+      - job-portal-network
     env_file:
       - .env
     ports:
@@ -47,6 +47,6 @@ services:
     restart: always
 
 networks:
-  graphene-start:
-    name: graphene-start
+  job-portal-network:
+    name: job-portal-network
     driver: bridge

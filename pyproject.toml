@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "graphene-start"
+name = "job-portal"
 version = "0.1.0"
 description = ""
 authors = ["Pau Duran <pauduranmanzano@gmail.com>"]

@@ -11,7 +11,7 @@ fi
 # Create initial data in DB
 if [ "$DOMAIN" = "localhost" ]; then
   echo "Running init_db.py"
-  python /graphene_start/app/database/init_db.py
+  python /job_portal/app/database/init_db.py
 fi
 
 # Run webserver
