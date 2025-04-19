@@ -23,6 +23,12 @@ class UserRepository(BaseRepository):
         result = await self._db.execute(query)
         return list(result.scalars().all())
 
+    async def create(self, user: User) -> User:
+        self._db.add(user)
+        await self.commit()
+        await self._db.refresh(user)
+        return user
+
     async def authenticate(
         self,
         email: str,
