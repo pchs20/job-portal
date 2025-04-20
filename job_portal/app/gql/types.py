@@ -1,5 +1,7 @@
 from graphene import Field, Int, List, ObjectType, String
 
+from app.enums import UserRoleGrapheneEnum
+
 
 class EmployerObject(ObjectType):
     id = Int()
@@ -30,7 +32,7 @@ class UserObject(ObjectType):
     id = Int()
     username = String()
     email = String()
-    role = String()
+    role = UserRoleGrapheneEnum()
     job_applications = List(lambda: JobApplicationObject)
 
     @staticmethod

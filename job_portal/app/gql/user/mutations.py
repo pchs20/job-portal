@@ -2,6 +2,7 @@ from graphene import Field, Mutation, ObjectType, String
 from graphql import GraphQLError
 
 from app.deps import get_repository
+from app.enums import UserRoleGrapheneEnum
 from app.gql import UserObject
 from app.models import User
 from app.respositories import UserRepository
@@ -32,12 +33,19 @@ class AddUser(Mutation):
         username = String(required=True)
         email = String(required=True)
         password = String(required=True)
-        role = String(required=True)
+        role = UserRoleGrapheneEnum(required=True)
 
     user = Field(lambda: UserObject)
 
     @staticmethod
-    async def mutate(root, info, username: str, email: str, password: str, role: str):
+    async def mutate(
+        root,
+        info,
+        username: str,
+        email: str,
+        password: str,
+        role: UserRoleGrapheneEnum,
+    ):
         users_repo = await get_repository(UserRepository)
         if await users_repo.get_by_email(email=email) is not None:
             raise GraphQLError('A user with that email already exists')
@@ -46,7 +54,7 @@ class AddUser(Mutation):
             username=username,
             email=email,
             hashed_password=hash_password,
-            role=role,
+            role=role.value,
         )
         user = await users_repo.create(user)
         return AddUser(user=user)

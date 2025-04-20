@@ -1,6 +1,7 @@
 import asyncio
 
 from app.database import async_session
+from app.enums import UserRoleEnum
 from app.models import Employer, Job, JobApplication, User
 from app.security import get_password_hash
 
@@ -45,19 +46,19 @@ users_data = [
         'username': 'pduran',
         'email': 'pauduranmanzano@gmail.com',
         'password': 'securepassword',
-        'role': 'admin',
+        'role': UserRoleEnum.ADMIN,
     },
     {
         'username': 'useruser',
         'email': 'user@gmail.com',
         'password': 'userpassword',
-        'role': 'admin',
+        'role': UserRoleEnum.ADMIN,
     },
     {
         'username': 'useruser2',
         'email': 'user2@gmail.com',
         'password': 'userpassword2',
-        'role': 'admin',
+        'role': UserRoleEnum.ADMIN,
     },
 ]
 
