@@ -1,8 +1,8 @@
 from graphene import Field, Mutation, ObjectType, String
 from graphql import GraphQLError
 
-from app.deps import get_repository
-from app.enums import UserRoleGrapheneEnum
+from app.deps import get_authenticated_user, get_repository
+from app.enums import UserRoleEnum, UserRoleGrapheneEnum
 from app.gql import UserObject
 from app.models import User
 from app.respositories import UserRepository
@@ -46,6 +46,10 @@ class AddUser(Mutation):
         password: str,
         role: UserRoleGrapheneEnum,
     ):
+        if role == UserRoleGrapheneEnum.ADMIN:
+            current_user = await get_authenticated_user(info.context)
+            if current_user.role != UserRoleEnum.ADMIN:
+                raise GraphQLError('Only admins can create new admins')
         users_repo = await get_repository(UserRepository)
         if await users_repo.get_by_email(email=email) is not None:
             raise GraphQLError('A user with that email already exists')
