@@ -2,7 +2,7 @@ from typing import Any
 
 from graphene import Boolean, Field, Int, Mutation, ObjectType, String
 
-from app.deps import get_repository
+from app.deps import admin_user, get_repository
 from app.gql import EmployerObject
 from app.models import Employer
 from app.respositories import EmployerRepository
@@ -17,6 +17,7 @@ class AddEmployer(Mutation):
     employer = Field(lambda: EmployerObject)
 
     @staticmethod
+    @admin_user
     async def mutate(root, info, name, contact_email, industry):
         employers_repo = await get_repository(EmployerRepository)
         employer = Employer(name=name, contact_email=contact_email, industry=industry)
@@ -63,6 +64,7 @@ class DeleteEmployer(Mutation):
     success = Boolean()
 
     @staticmethod
+    @admin_user
     async def mutate(root, info, employer_id):
         employers_repo = await get_repository(EmployerRepository)
         employer = await employers_repo.get(employer_id)
