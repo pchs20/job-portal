@@ -1,7 +1,7 @@
 from graphene import Field, Int, Mutation, ObjectType
 from graphql import GraphQLError
 
-from app.deps import get_repository
+from app.deps import authenticated_user, get_repository
 from app.gql import JobApplicationObject
 from app.models import JobApplication
 from app.respositories import JobApplicationRepository
@@ -15,6 +15,7 @@ class ApplyToJob(Mutation):
     job_application = Field(lambda: JobApplicationObject)
 
     @staticmethod
+    @authenticated_user
     async def mutate(root, info, job_id, user_id):
         job_applications_repo = await get_repository(JobApplicationRepository)
         existing_applications = await job_applications_repo.get_multi(

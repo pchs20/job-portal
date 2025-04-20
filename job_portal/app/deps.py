@@ -47,3 +47,13 @@ def admin_user(func):
         return await func(*args, **kwargs)
 
     return wrapper
+
+
+def authenticated_user(func):
+    @wraps(func)
+    async def wrapper(*args, **kwargs):
+        info = args[1]
+        await get_authenticated_user(info.context)
+        return await func(*args, **kwargs)
+
+    return wrapper
